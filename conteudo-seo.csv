@@ -1,0 +1,27 @@
+﻿tipo;chave;valor;arquivo_destino;observacao
+empresa;nome_fantasia;IBMEX CONSULTORIA;index.html;Marca pública
+empresa;razao_social;IBMEC JR. CONSULTORIA BELO HORIZONTE;"index.html; politica-de-privacidade.html";Razão social informada
+empresa;cnpj;05.279.790/0001-00;"index.html; politica-de-privacidade.html";CNPJ
+contato;whatsapp;+55 11 98632-4895;index.html;Destino dos CTAs
+contato;whatsapp_url;https://wa.me/5511986324895;index.html;Base dos links
+contato;telefone_1;(31) 3201-1461;index.html;Telefone oficial
+contato;telefone_2;(31) 3271-5531;index.html;Telefone oficial
+contato;email;CERTIDOES@CONTABILIDADEDIAS.COM.BR;"index.html; politica-de-privacidade.html";E-mail oficial
+endereco;logradouro;Rua Rio Grande do Norte, 300;index.html;Endereço
+endereco;complemento;3º andar;index.html;Complemento normalizado
+endereco;bairro;Santa Efigênia;index.html;Bairro
+endereco;municipio;Belo Horizonte;index.html;Município
+endereco;uf;MG;index.html;UF
+endereco;cep;30130-130;index.html;CEP
+seo;title_home;IBMEX Consultoria | Estratégia, Gestão e Resultados em Belo Horizonte;index.html;Meta title
+seo;description_home;Consultoria empresarial em Belo Horizonte para apoiar decisões, organizar processos e transformar estratégia em execução com foco em resultados.;index.html;Meta description
+seo;canonical;https://SEU-DOMINIO.com.br/;index.html;Substituir antes do deploy
+seo;og_image;https://SEU-DOMINIO.com.br/logo-ibmex.png;index.html;Substituir antes do deploy
+seo;sitemap;https://SEU-DOMINIO.com.br/sitemap.xml;robots.txt;Substituir antes do deploy
+pagina;home;/;index.html;Landing page principal
+pagina;privacidade;/politica-de-privacidade.html;politica-de-privacidade.html;Política padrão inicial
+secao;hero;Estratégia que vira decisão e resultado.;index.html;#inicio
+secao;solucoes;"Planejamento; Gestão; Performance; Finanças; Eficiência; Projetos";index.html;#servicos
+secao;metodo;"Diagnóstico; Direcionamento; Plano de ação; Acompanhamento";index.html;#metodo
+secao;empresa;Dados institucionais e apresentação;index.html;#empresa
+secao;contato;"WhatsApp; telefones; e-mail; endereço; mapa";index.html;#contato
