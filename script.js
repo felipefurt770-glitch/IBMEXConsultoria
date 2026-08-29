@@ -20,6 +20,11 @@ if (toggle && menu) {
     setMenu(open, { moveFocus: open });
   });
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('click', event => {
+    if (!menu.classList.contains('open')) return;
+    if (menu.contains(event.target) || toggle.contains(event.target)) return;
+    setMenu(false);
+  });
   document.addEventListener('keydown', e => {
     if (!menu.classList.contains('open')) return;
 
@@ -48,49 +53,6 @@ if (toggle && menu) {
 document.querySelectorAll('[data-year]').forEach(el => {
   el.textContent = String(new Date().getFullYear());
 });
-
-const fraudNotice = document.querySelector('[data-fraud-notice]');
-const fraudConfirm = document.querySelector('[data-fraud-confirm]');
-const fraudSessionKey = 'bellinati-fraud-notice-acknowledged';
-
-if (fraudNotice && fraudConfirm) {
-  let acknowledged = false;
-
-  try {
-    acknowledged = window.sessionStorage.getItem(fraudSessionKey) === 'true';
-  } catch (_) {
-    acknowledged = false;
-  }
-
-  if (!acknowledged) {
-    fraudNotice.hidden = false;
-    document.body.classList.add('fraud-notice-open');
-    window.requestAnimationFrame(() => {
-      fraudNotice.classList.add('is-visible');
-      fraudConfirm.focus({ preventScroll: true });
-    });
-  }
-
-  fraudConfirm.addEventListener('click', () => {
-    try {
-      window.sessionStorage.setItem(fraudSessionKey, 'true');
-    } catch (_) {
-      // O aviso ainda pode ser fechado quando o armazenamento está indisponível.
-    }
-
-    fraudNotice.classList.remove('is-visible');
-    document.body.classList.remove('fraud-notice-open');
-    window.setTimeout(() => {
-      fraudNotice.hidden = true;
-    }, 240);
-  });
-
-  document.addEventListener('keydown', event => {
-    if (fraudNotice.hidden || event.key !== 'Tab') return;
-    event.preventDefault();
-    fraudConfirm.focus({ preventScroll: true });
-  });
-}
 
 const mobileRevealQuery = window.matchMedia('(max-width: 720px)');
 const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
