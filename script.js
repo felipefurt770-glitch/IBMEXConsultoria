@@ -49,3 +49,34 @@ document.querySelectorAll('[data-year]').forEach(el => {
   el.textContent = String(new Date().getFullYear());
 });
 
+const mobileRevealQuery = window.matchMedia('(max-width: 720px)');
+const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (mobileRevealQuery.matches && !reduceMotionQuery.matches && 'IntersectionObserver' in window) {
+  const revealTargets = document.querySelectorAll([
+    '.hero-panel',
+    '.hero-actions',
+    '.section-soft .about-grid > *',
+    '.cta-box',
+    '.contact-grid > div',
+    '.contact-card p',
+    '.footer-grid',
+    '.footer-bottom'
+  ].join(','));
+
+  document.body.classList.add('reveal-ready');
+  revealTargets.forEach((element, index) => {
+    element.classList.add('scroll-reveal');
+    element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 70}ms`);
+  });
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      revealObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+
+  revealTargets.forEach(element => revealObserver.observe(element));
+}
