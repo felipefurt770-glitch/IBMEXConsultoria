@@ -8,35 +8,36 @@ function menuLinks() {
 
 function setMenu(open, { moveFocus = false } = {}) {
   if (!toggle || !menu) return;
-  const shouldOpen = mobileMenuQuery.matches && open;
-  menu.classList.toggle('open', shouldOpen);
-  document.body.classList.toggle('menu-open', shouldOpen);
-  toggle.setAttribute('aria-expanded', String(shouldOpen));
-  toggle.setAttribute('aria-label', shouldOpen ? 'Fechar menu' : 'Abrir menu');
-  menu.inert = mobileMenuQuery.matches && !shouldOpen;
-  if (shouldOpen && moveFocus) menuLinks()[0]?.focus();
+  menu.classList.toggle('open', open);
+  toggle.setAttribute('aria-expanded', String(open));
+  toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+  if (open && moveFocus) menuLinks()[0]?.focus();
 }
 
 if (toggle && menu) {
-  setMenu(false);
   toggle.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    const open = !menu.classList.contains('open');
     setMenu(open, { moveFocus: open });
   });
-  menuLinks().forEach(link => link.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('keydown', event => {
-    if (toggle.getAttribute('aria-expanded') !== 'true') return;
-    if (event.key === 'Escape') {
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => {
+    if (!menu.classList.contains('open')) return;
+
+    if (e.key === 'Escape') {
       setMenu(false);
       toggle.focus();
     }
-    if (event.key === 'Tab') {
+
+    if (e.key === 'Tab' && mobileMenuQuery.matches) {
       const links = menuLinks();
-      if (event.shiftKey && document.activeElement === links[0]) {
-        event.preventDefault();
+      const first = links[0];
+      const last = links[links.length - 1];
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
         toggle.focus();
-      } else if (!event.shiftKey && document.activeElement === links.at(-1)) {
-        event.preventDefault();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
         toggle.focus();
       }
     }
@@ -44,6 +45,7 @@ if (toggle && menu) {
   mobileMenuQuery.addEventListener('change', () => setMenu(false));
 }
 
-document.querySelectorAll('[data-year]').forEach(element => {
-  element.textContent = String(new Date().getFullYear());
+document.querySelectorAll('[data-year]').forEach(el => {
+  el.textContent = String(new Date().getFullYear());
 });
+
