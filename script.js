@@ -60,8 +60,7 @@ if (mobileRevealQuery.matches && !reduceMotionQuery.matches && 'IntersectionObse
     '.cta-box',
     '.contact-grid > div',
     '.contact-card p',
-    '.footer-grid',
-    '.footer-bottom'
+    '.footer-grid'
   ].join(','));
 
   document.body.classList.add('reveal-ready');
