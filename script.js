@@ -9,7 +9,6 @@ function menuLinks() {
 function setMenu(open, { moveFocus = false } = {}) {
   if (!toggle || !menu) return;
   menu.classList.toggle('open', open);
-  document.body.classList.toggle('menu-open', open);
   toggle.setAttribute('aria-expanded', String(open));
   toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
   if (open && moveFocus) menuLinks()[0]?.focus();
