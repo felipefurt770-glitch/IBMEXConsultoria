@@ -65,7 +65,7 @@
       <p>Nos termos da LGPD, você pode solicitar, quando aplicável: confirmação de tratamento; acesso; correção; anonimização, bloqueio ou eliminação; portabilidade; informação sobre compartilhamentos; revogação do consentimento; e revisão de decisões automatizadas. A solicitação poderá exigir validação de identidade para proteção do titular.</p>
 
       <h2>9. Cookies e dados de navegação</h2>
-      <p>Este site não configura diretamente cookies de publicidade ou de marketing. Cookies estritamente necessários ou registros técnicos podem ser utilizados pela infraestrutura de hospedagem para segurança, entrega e funcionamento das páginas.</p>
+      <p>Este site não configura diretamente cookies de publicidade ou de marketing. Cookies estritamente necessários ou registros técnicos podem ser utilizados pela infraestrutura de hospedagem para segurança, entrega e funcionamento das páginas. O armazenamento de sessão também é utilizado para lembrar a confirmação do aviso antifraude somente durante a sessão de navegação atual.</p>
 
       <h2>10. Alterações desta política</h2>
       <p>Esta Política poderá ser atualizada para refletir mudanças legais, regulatórias, tecnológicas ou operacionais. A versão vigente e sua data de atualização permanecerão disponíveis nesta página.</p>
@@ -85,6 +85,18 @@
   <a class="floating-whatsapp" href="https://wa.me/5511986324895?text=Ol%C3%A1%2C%20solicito%20atendimento." target="_blank" rel="noopener noreferrer" aria-label="Conversar pelo WhatsApp">
     <img src="assets/whatsapp-floating.png" alt="" width="192" height="192" aria-hidden="true">
   </a>
+  <div class="fraud-notice" data-fraud-notice hidden>
+    <section class="fraud-card" role="dialog" aria-modal="true" aria-labelledby="fraud-title" aria-describedby="fraud-description">
+      <div class="fraud-icon" aria-hidden="true">!</div>
+      <div class="fraud-copy">
+        <p class="fraud-kicker">Aviso de segurança</p>
+        <h2 id="fraud-title">Proteja-se contra fraudes</h2>
+        <p id="fraud-description">Antes de realizar pagamentos ou compartilhar informações, confirme o atendimento pelos canais oficiais da Bellinati Perez. Nunca informe senhas ou códigos de verificação e desconfie de links ou cobranças inesperadas.</p>
+        <p class="fraud-contact">Em caso de dúvida, fale conosco pelo número oficial: <strong>(11) 98632-4895</strong>.</p>
+      </div>
+      <button class="fraud-confirm" type="button" data-fraud-confirm>OK</button>
+    </section>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
