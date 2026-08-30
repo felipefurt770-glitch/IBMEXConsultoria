@@ -1,84 +1,43 @@
-const toggle = document.querySelector('.menu-toggle');
-const menu = document.querySelector('#main-menu');
-const mobileMenuQuery = window.matchMedia('(max-width: 720px)');
+const menuBtn = document.querySelector('.menu-toggle');
+const nav = document.querySelector('.nav-links');
 
-function menuLinks() {
-  return menu ? Array.from(menu.querySelectorAll('a')) : [];
-}
+if (menuBtn && nav) {
+  const closeMenu = () => {
+    nav.classList.remove('open');
+    document.body.classList.remove('menu-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.setAttribute('aria-label', 'Abrir menu');
+  };
 
-function setMenu(open, { moveFocus = false } = {}) {
-  if (!toggle || !menu) return;
-  menu.classList.toggle('open', open);
-  toggle.setAttribute('aria-expanded', String(open));
-  toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
-  if (open && moveFocus) menuLinks()[0]?.focus();
-}
-
-if (toggle && menu) {
-  toggle.addEventListener('click', () => {
-    const open = !menu.classList.contains('open');
-    setMenu(open, { moveFocus: open });
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    document.body.classList.toggle('menu-open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
   });
-  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('click', event => {
-    if (!menu.classList.contains('open')) return;
-    if (menu.contains(event.target) || toggle.contains(event.target)) return;
-    setMenu(false);
+  nav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
   });
-  document.addEventListener('keydown', e => {
-    if (!menu.classList.contains('open')) return;
-
-    if (e.key === 'Escape') {
-      setMenu(false);
-      toggle.focus();
-    }
-
-    if (e.key === 'Tab' && mobileMenuQuery.matches) {
-      const links = menuLinks();
-      const first = links[0];
-      const last = links[links.length - 1];
-
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        toggle.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        toggle.focus();
-      }
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && nav.classList.contains('open')) {
+      closeMenu();
+      menuBtn.focus();
     }
   });
-  mobileMenuQuery.addEventListener('change', () => setMenu(false));
+}
+
+const cookie = document.querySelector('.cookie');
+const accept = document.querySelector('[data-cookie-accept]');
+if (localStorage.getItem('ibmex_cookie_notice') === 'accepted' && cookie) {
+  cookie.classList.add('hidden');
+}
+if (accept && cookie) {
+  accept.addEventListener('click', () => {
+    localStorage.setItem('ibmex_cookie_notice', 'accepted');
+    cookie.classList.add('hidden');
+  });
 }
 
 document.querySelectorAll('[data-year]').forEach(el => {
-  el.textContent = String(new Date().getFullYear());
+  el.textContent = new Date().getFullYear();
 });
-
-const mobileRevealQuery = window.matchMedia('(max-width: 720px)');
-const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-if (mobileRevealQuery.matches && !reduceMotionQuery.matches && 'IntersectionObserver' in window) {
-  const revealTargets = document.querySelectorAll([
-    '.hero-panel',
-    '.hero-actions',
-    '.section-soft .about-grid > *',
-    '.cta-box',
-    '.contact-grid > div',
-    '.contact-card p',
-    '.footer-grid'
-  ].join(','));
-
-  document.body.classList.add('reveal-ready');
-  revealTargets.forEach((element, index) => {
-    element.classList.add('scroll-reveal');
-    element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 70}ms`);
-  });
-
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      entry.target.classList.toggle('is-visible', entry.isIntersecting);
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
-
-  revealTargets.forEach(element => revealObserver.observe(element));
-}
